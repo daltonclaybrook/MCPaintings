@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7550F9CD16D6EA7200DFC764 /* CropController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7550F9CB16D6EA7200DFC764 /* CropController.m */; };
+		7550F9CE16D6EA7200DFC764 /* CropController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7550F9CC16D6EA7200DFC764 /* CropController.xib */; };
+		7550F9D116D6EB0200DFC764 /* CropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7550F9D016D6EB0200DFC764 /* CropView.m */; };
+		7550F9D316D6F05300DFC764 /* two.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7550F9D216D6F05300DFC764 /* two.jpg */; };
+		7569B2AE16D6C814001B072E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7569B2AD16D6C814001B072E /* Cocoa.framework */; };
+		7569B2B816D6C814001B072E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7569B2B616D6C814001B072E /* InfoPlist.strings */; };
+		7569B2BA16D6C814001B072E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7569B2B916D6C814001B072E /* main.m */; };
+		7569B2BE16D6C814001B072E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7569B2BC16D6C814001B072E /* Credits.rtf */; };
+		7569B2C116D6C814001B072E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7569B2C016D6C814001B072E /* AppDelegate.m */; };
+		7569B2C416D6C814001B072E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7569B2C216D6C814001B072E /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7550F9CA16D6EA7200DFC764 /* CropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropController.h; sourceTree = "<group>"; };
+		7550F9CB16D6EA7200DFC764 /* CropController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropController.m; sourceTree = "<group>"; };
+		7550F9CC16D6EA7200DFC764 /* CropController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CropController.xib; sourceTree = "<group>"; };
+		7550F9CF16D6EB0200DFC764 /* CropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropView.h; sourceTree = "<group>"; };
+		7550F9D016D6EB0200DFC764 /* CropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropView.m; sourceTree = "<group>"; };
+		7550F9D216D6F05300DFC764 /* two.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = two.jpg; sourceTree = "<group>"; };
+		7569B2AA16D6C814001B072E /* MCCustomPaintings.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCCustomPaintings.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7569B2AD16D6C814001B072E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		7569B2B016D6C814001B072E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		7569B2B116D6C814001B072E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7569B2B216D6C814001B072E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7569B2B516D6C814001B072E /* MCCustomPaintings-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MCCustomPaintings-Info.plist"; sourceTree = "<group>"; };
+		7569B2B716D6C814001B072E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7569B2B916D6C814001B072E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7569B2BB16D6C814001B072E /* MCCustomPaintings-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MCCustomPaintings-Prefix.pch"; sourceTree = "<group>"; };
+		7569B2BD16D6C814001B072E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		7569B2BF16D6C814001B072E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7569B2C016D6C814001B072E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7569B2C316D6C814001B072E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7569B2A716D6C813001B072E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7569B2AE16D6C814001B072E /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7569B2A116D6C813001B072E = {
+			isa = PBXGroup;
+			children = (
+				7569B2B316D6C814001B072E /* MCCustomPaintings */,
+				7569B2AC16D6C814001B072E /* Frameworks */,
+				7569B2AB16D6C814001B072E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7569B2AB16D6C814001B072E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7569B2AA16D6C814001B072E /* MCCustomPaintings.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7569B2AC16D6C814001B072E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7569B2AD16D6C814001B072E /* Cocoa.framework */,
+				7569B2AF16D6C814001B072E /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7569B2AF16D6C814001B072E /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7569B2B016D6C814001B072E /* AppKit.framework */,
+				7569B2B116D6C814001B072E /* CoreData.framework */,
+				7569B2B216D6C814001B072E /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		7569B2B316D6C814001B072E /* MCCustomPaintings */ = {
+			isa = PBXGroup;
+			children = (
+				7550F9D216D6F05300DFC764 /* two.jpg */,
+				7569B2BF16D6C814001B072E /* AppDelegate.h */,
+				7569B2C016D6C814001B072E /* AppDelegate.m */,
+				7550F9CA16D6EA7200DFC764 /* CropController.h */,
+				7550F9CB16D6EA7200DFC764 /* CropController.m */,
+				7550F9CC16D6EA7200DFC764 /* CropController.xib */,
+				7550F9CF16D6EB0200DFC764 /* CropView.h */,
+				7550F9D016D6EB0200DFC764 /* CropView.m */,
+				7569B2C216D6C814001B072E /* MainMenu.xib */,
+				7569B2B416D6C814001B072E /* Supporting Files */,
+			);
+			path = MCCustomPaintings;
+			sourceTree = "<group>";
+		};
+		7569B2B416D6C814001B072E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7569B2B516D6C814001B072E /* MCCustomPaintings-Info.plist */,
+				7569B2B616D6C814001B072E /* InfoPlist.strings */,
+				7569B2B916D6C814001B072E /* main.m */,
+				7569B2BB16D6C814001B072E /* MCCustomPaintings-Prefix.pch */,
+				7569B2BC16D6C814001B072E /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7569B2A916D6C813001B072E /* MCCustomPaintings */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7569B2C716D6C814001B072E /* Build configuration list for PBXNativeTarget "MCCustomPaintings" */;
+			buildPhases = (
+				7569B2A616D6C813001B072E /* Sources */,
+				7569B2A716D6C813001B072E /* Frameworks */,
+				7569B2A816D6C813001B072E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MCCustomPaintings;
+			productName = MCCustomPaintings;
+			productReference = 7569B2AA16D6C814001B072E /* MCCustomPaintings.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7569B2A216D6C813001B072E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Claybrook Software, LLC";
+			};
+			buildConfigurationList = 7569B2A516D6C813001B072E /* Build configuration list for PBXProject "MCCustomPaintings" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7569B2A116D6C813001B072E;
+			productRefGroup = 7569B2AB16D6C814001B072E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7569B2A916D6C813001B072E /* MCCustomPaintings */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7569B2A816D6C813001B072E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7569B2B816D6C814001B072E /* InfoPlist.strings in Resources */,
+				7569B2BE16D6C814001B072E /* Credits.rtf in Resources */,
+				7569B2C416D6C814001B072E /* MainMenu.xib in Resources */,
+				7550F9CE16D6EA7200DFC764 /* CropController.xib in Resources */,
+				7550F9D316D6F05300DFC764 /* two.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7569B2A616D6C813001B072E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7569B2BA16D6C814001B072E /* main.m in Sources */,
+				7569B2C116D6C814001B072E /* AppDelegate.m in Sources */,
+				7550F9CD16D6EA7200DFC764 /* CropController.m in Sources */,
+				7550F9D116D6EB0200DFC764 /* CropView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7569B2B616D6C814001B072E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7569B2B716D6C814001B072E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7569B2BC16D6C814001B072E /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7569B2BD16D6C814001B072E /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		7569B2C216D6C814001B072E /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7569B2C316D6C814001B072E /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7569B2C516D6C814001B072E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7569B2C616D6C814001B072E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7569B2C816D6C814001B072E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MCCustomPaintings/MCCustomPaintings-Prefix.pch";
+				INFOPLIST_FILE = "MCCustomPaintings/MCCustomPaintings-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7569B2C916D6C814001B072E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MCCustomPaintings/MCCustomPaintings-Prefix.pch";
+				INFOPLIST_FILE = "MCCustomPaintings/MCCustomPaintings-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7569B2A516D6C813001B072E /* Build configuration list for PBXProject "MCCustomPaintings" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7569B2C516D6C814001B072E /* Debug */,
+				7569B2C616D6C814001B072E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7569B2C716D6C814001B072E /* Build configuration list for PBXNativeTarget "MCCustomPaintings" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7569B2C816D6C814001B072E /* Debug */,
+				7569B2C916D6C814001B072E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7569B2A216D6C813001B072E /* Project object */;
+}
