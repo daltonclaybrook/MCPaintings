@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <QuartzCore/QuartzCore.h>
 
 typedef enum {
     AspectRatio1to1,

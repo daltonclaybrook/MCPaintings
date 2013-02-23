@@ -7,6 +7,7 @@
 //
 
 #import "CropView.h"
+#import <QuartzCore/QuartzCore.h>
 
 static CGFloat padding = 20.0f;
 static CGFloat minRectWidth = 50.0f;
@@ -104,11 +105,9 @@ static NSString *trackingAreaRect = @"rect";
 - (void)mouseEntered:(NSEvent *)theEvent {
     NSDictionary *info = (NSDictionary *)theEvent.userData;
     if ([[info objectForKey:kTrackingAreaKey] isEqualToString:trackingAreaCorner]) {
-        NSLog(@"entered corner");
         [[NSCursor crosshairCursor] set];
         self.mouseOverCorner = YES;
     } else {
-        NSLog(@"entered rect");
         if (!self.mouseOverCorner) [[NSCursor openHandCursor] set];
         self.mouseOverRect = YES;
     }
@@ -259,7 +258,6 @@ static NSString *trackingAreaRect = @"rect";
     NSCursor *currentCursor = [NSCursor arrowCursor];
     if (NSPointInRect(mousePoint, self.cropRect)) {
         currentCursor = [NSCursor openHandCursor];
-        NSLog(@"open hand");
         self.mouseOverRect = YES;
     } else {
         self.mouseOverRect = NO;

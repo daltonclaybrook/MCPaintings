@@ -11,6 +11,8 @@
 		7550F9CE16D6EA7200DFC764 /* CropController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7550F9CC16D6EA7200DFC764 /* CropController.xib */; };
 		7550F9D116D6EB0200DFC764 /* CropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7550F9D016D6EB0200DFC764 /* CropView.m */; };
 		7550F9D316D6F05300DFC764 /* two.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7550F9D216D6F05300DFC764 /* two.jpg */; };
+		755F423E16D9455300B38099 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755F423D16D9455300B38099 /* QuartzCore.framework */; };
+		755F424016D9693400B38099 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 755F423F16D9693400B38099 /* plus.png */; };
 		7569B2AE16D6C814001B072E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7569B2AD16D6C814001B072E /* Cocoa.framework */; };
 		7569B2B816D6C814001B072E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7569B2B616D6C814001B072E /* InfoPlist.strings */; };
 		7569B2BA16D6C814001B072E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7569B2B916D6C814001B072E /* main.m */; };
@@ -26,6 +28,8 @@
 		7550F9CF16D6EB0200DFC764 /* CropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropView.h; sourceTree = "<group>"; };
 		7550F9D016D6EB0200DFC764 /* CropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropView.m; sourceTree = "<group>"; };
 		7550F9D216D6F05300DFC764 /* two.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = two.jpg; sourceTree = "<group>"; };
+		755F423D16D9455300B38099 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		755F423F16D9693400B38099 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		7569B2AA16D6C814001B072E /* MCCustomPaintings.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCCustomPaintings.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7569B2AD16D6C814001B072E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7569B2B016D6C814001B072E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -46,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				755F423E16D9455300B38099 /* QuartzCore.framework in Frameworks */,
 				7569B2AE16D6C814001B072E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,6 +78,7 @@
 		7569B2AC16D6C814001B072E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				755F423D16D9455300B38099 /* QuartzCore.framework */,
 				7569B2AD16D6C814001B072E /* Cocoa.framework */,
 				7569B2AF16D6C814001B072E /* Other Frameworks */,
 			);
@@ -92,15 +98,16 @@
 		7569B2B316D6C814001B072E /* MCCustomPaintings */ = {
 			isa = PBXGroup;
 			children = (
+				755F423F16D9693400B38099 /* plus.png */,
 				7550F9D216D6F05300DFC764 /* two.jpg */,
 				7569B2BF16D6C814001B072E /* AppDelegate.h */,
 				7569B2C016D6C814001B072E /* AppDelegate.m */,
+				7569B2C216D6C814001B072E /* MainMenu.xib */,
 				7550F9CA16D6EA7200DFC764 /* CropController.h */,
 				7550F9CB16D6EA7200DFC764 /* CropController.m */,
 				7550F9CC16D6EA7200DFC764 /* CropController.xib */,
 				7550F9CF16D6EB0200DFC764 /* CropView.h */,
 				7550F9D016D6EB0200DFC764 /* CropView.m */,
-				7569B2C216D6C814001B072E /* MainMenu.xib */,
 				7569B2B416D6C814001B072E /* Supporting Files */,
 			);
 			path = MCCustomPaintings;
@@ -174,6 +181,7 @@
 				7569B2C416D6C814001B072E /* MainMenu.xib in Resources */,
 				7550F9CE16D6EA7200DFC764 /* CropController.xib in Resources */,
 				7550F9D316D6F05300DFC764 /* two.jpg in Resources */,
+				755F424016D9693400B38099 /* plus.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
