@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "CropController.h"
+#import "PaintingsWindowController.h"
 #import <QuartzCore/QuartzCore.h>
 
 static NSString *mcPath = @"Library/Application Support/minecraft/";
@@ -16,6 +17,7 @@ static NSString *newTexturePackCellID = @"newTexturePack";
 
 @interface AppDelegate ()
 
+@property (nonatomic, strong) PaintingsWindowController *paintingsWindow;
 @property (nonatomic, strong) CropController *cropController;
 
 - (BOOL)loadTexturePackFolder;
@@ -42,12 +44,17 @@ static NSString *newTexturePackCellID = @"newTexturePack";
 }
 
 - (IBAction)start:(id)sender {
+    NSString *fullPath = nil;
     if ([self.tableView selectedRow] == 0) {
-        
+         fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@bin/minecraft1.jar", mcPath]];
     } else {
-        NSString *fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@texturepacks/%@", mcPath, [self.texturePacks objectAtIndex:self.tableView.selectedRow-1]]];
-        NSLog(@"path: %@", fullPath);
+        fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@texturepacks/%@", mcPath, [self.texturePacks objectAtIndex:self.tableView.selectedRow-1]]];
     }
+    PaintingsController *paintController = [[PaintingsController alloc] initWithSourcePath:fullPath];
+    self.paintingsWindow = [[PaintingsWindowController alloc] initWithWindowNibName:@"PaintingsWindowController"];
+    [self.paintingsWindow setPaintingsController:paintController];
+    [self.paintingsWindow showWindow:self];
+    [self.window close];
 }
 
 #pragma mark Private Methods
@@ -98,16 +105,16 @@ static NSString *newTexturePackCellID = @"newTexturePack";
         cell = [tableView makeViewWithIdentifier:existingTexturePackCellID owner:self];
         
         if (!cell) {
-            cell = [[NSTableRowView alloc] initWithFrame:NSMakeRect(0, 0, 146.0, 54.0f)];
+            cell = [[NSTableRowView alloc] initWithFrame:NSMakeRect(0, 0, 146.0, 43.0f)];
             cell.wantsLayer = YES;
             cell.identifier = existingTexturePackCellID;
             
-            CAGradientLayer *gradient = [CAGradientLayer layer];
-            gradient.frame = cell.bounds;
-            gradient.colors = [NSArray arrayWithObjects:(id)[[NSColor whiteColor] CGColor], (id)[[NSColor colorWithCalibratedWhite:0.8 alpha:1.0] CGColor], nil];
-            [cell.layer addSublayer:gradient];
+//            CAGradientLayer *gradient = [CAGradientLayer layer];
+//            gradient.frame = cell.bounds;
+//            gradient.colors = [NSArray arrayWithObjects:(id)[[NSColor whiteColor] CGColor], (id)[[NSColor colorWithCalibratedWhite:0.8 alpha:1.0] CGColor], nil];
+//            [cell.layer addSublayer:gradient];
             
-            textField = [[NSTextField alloc] initWithFrame:NSMakeRect(10, 18.0, 126.0f, 17.0f)];
+            textField = [[NSTextField alloc] initWithFrame:NSMakeRect(10, 13.0, 126.0f, 17.0f)];
             [textField setEditable:NO];
             [textField setBordered:NO];
             [textField setBackgroundColor:[NSColor clearColor]];
@@ -122,17 +129,17 @@ static NSString *newTexturePackCellID = @"newTexturePack";
         cell = [tableView makeViewWithIdentifier:newTexturePackCellID owner:self];
         
         if (!cell) {
-            cell = [[NSTableRowView alloc] initWithFrame:NSMakeRect(0, 0, 146.0, 54.0f)];
+            cell = [[NSTableRowView alloc] initWithFrame:NSMakeRect(0, 0, 146.0, 43.0f)];
             cell.identifier = newTexturePackCellID;
             
-            textField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 18.0, 102.0f, 17.0f)];
+            textField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 13.0, 102.0f, 17.0f)];
             [textField setEditable:NO];
             [textField setBordered:NO];
             [textField setBackgroundColor:[NSColor clearColor]];
             [textField setTag:kTextFieldTag];
             [cell addSubview:textField];
             
-            NSImageView *imageView = [[NSImageView alloc] initWithFrame:NSMakeRect(10.0, 17.0, 20.0, 20.0)];
+            NSImageView *imageView = [[NSImageView alloc] initWithFrame:NSMakeRect(10.0, 11.0, 20.0, 20.0)];
             [imageView setImage:[NSImage imageNamed:@"plus.png"]];
             [cell addSubview:imageView];
         } else {

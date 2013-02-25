@@ -7,12 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		754F522C16DA922C00902FAF /* PaintingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754F522B16DA922C00902FAF /* PaintingsController.m */; };
+		754F522F16DA923800902FAF /* Painting.m in Sources */ = {isa = PBXBuildFile; fileRef = 754F522E16DA923800902FAF /* Painting.m */; };
+		754F523516DAC19400902FAF /* PaintingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754F523316DAC19400902FAF /* PaintingsWindowController.m */; };
+		754F523616DAC19400902FAF /* PaintingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 754F523416DAC19400902FAF /* PaintingsWindowController.xib */; };
+		754F523916DAC42F00902FAF /* PaintingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 754F523816DAC42F00902FAF /* PaintingsView.m */; };
 		7550F9CD16D6EA7200DFC764 /* CropController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7550F9CB16D6EA7200DFC764 /* CropController.m */; };
 		7550F9CE16D6EA7200DFC764 /* CropController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7550F9CC16D6EA7200DFC764 /* CropController.xib */; };
 		7550F9D116D6EB0200DFC764 /* CropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7550F9D016D6EB0200DFC764 /* CropView.m */; };
 		7550F9D316D6F05300DFC764 /* two.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7550F9D216D6F05300DFC764 /* two.jpg */; };
 		755F423E16D9455300B38099 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755F423D16D9455300B38099 /* QuartzCore.framework */; };
 		755F424016D9693400B38099 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 755F423F16D9693400B38099 /* plus.png */; };
+		7566D22F16DAD82400A0516B /* kz.png in Resources */ = {isa = PBXBuildFile; fileRef = 7566D22E16DAD82400A0516B /* kz.png */; };
 		7569B2AE16D6C814001B072E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7569B2AD16D6C814001B072E /* Cocoa.framework */; };
 		7569B2B816D6C814001B072E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7569B2B616D6C814001B072E /* InfoPlist.strings */; };
 		7569B2BA16D6C814001B072E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7569B2B916D6C814001B072E /* main.m */; };
@@ -22,6 +28,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		754F522A16DA922C00902FAF /* PaintingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintingsController.h; sourceTree = "<group>"; };
+		754F522B16DA922C00902FAF /* PaintingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintingsController.m; sourceTree = "<group>"; };
+		754F522D16DA923800902FAF /* Painting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Painting.h; sourceTree = "<group>"; };
+		754F522E16DA923800902FAF /* Painting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Painting.m; sourceTree = "<group>"; };
+		754F523216DAC19400902FAF /* PaintingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintingsWindowController.h; sourceTree = "<group>"; };
+		754F523316DAC19400902FAF /* PaintingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintingsWindowController.m; sourceTree = "<group>"; };
+		754F523416DAC19400902FAF /* PaintingsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaintingsWindowController.xib; sourceTree = "<group>"; };
+		754F523716DAC42F00902FAF /* PaintingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintingsView.h; sourceTree = "<group>"; };
+		754F523816DAC42F00902FAF /* PaintingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintingsView.m; sourceTree = "<group>"; };
 		7550F9CA16D6EA7200DFC764 /* CropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropController.h; sourceTree = "<group>"; };
 		7550F9CB16D6EA7200DFC764 /* CropController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropController.m; sourceTree = "<group>"; };
 		7550F9CC16D6EA7200DFC764 /* CropController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CropController.xib; sourceTree = "<group>"; };
@@ -30,6 +45,7 @@
 		7550F9D216D6F05300DFC764 /* two.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = two.jpg; sourceTree = "<group>"; };
 		755F423D16D9455300B38099 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		755F423F16D9693400B38099 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		7566D22E16DAD82400A0516B /* kz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kz.png; sourceTree = "<group>"; };
 		7569B2AA16D6C814001B072E /* MCCustomPaintings.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCCustomPaintings.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7569B2AD16D6C814001B072E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7569B2B016D6C814001B072E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -98,16 +114,11 @@
 		7569B2B316D6C814001B072E /* MCCustomPaintings */ = {
 			isa = PBXGroup;
 			children = (
-				755F423F16D9693400B38099 /* plus.png */,
-				7550F9D216D6F05300DFC764 /* two.jpg */,
-				7569B2BF16D6C814001B072E /* AppDelegate.h */,
-				7569B2C016D6C814001B072E /* AppDelegate.m */,
-				7569B2C216D6C814001B072E /* MainMenu.xib */,
-				7550F9CA16D6EA7200DFC764 /* CropController.h */,
-				7550F9CB16D6EA7200DFC764 /* CropController.m */,
-				7550F9CC16D6EA7200DFC764 /* CropController.xib */,
-				7550F9CF16D6EB0200DFC764 /* CropView.h */,
-				7550F9D016D6EB0200DFC764 /* CropView.m */,
+				75E9309416DB3803004FB336 /* Controllers */,
+				75E9309116DB37A7004FB336 /* Model */,
+				75E9309316DB37EB004FB336 /* Views */,
+				75E9309216DB37CE004FB336 /* Nibs */,
+				75E9309016DB3794004FB336 /* Resources */,
 				7569B2B416D6C814001B072E /* Supporting Files */,
 			);
 			path = MCCustomPaintings;
@@ -123,6 +134,61 @@
 				7569B2BC16D6C814001B072E /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		75E9309016DB3794004FB336 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7566D22E16DAD82400A0516B /* kz.png */,
+				755F423F16D9693400B38099 /* plus.png */,
+				7550F9D216D6F05300DFC764 /* two.jpg */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		75E9309116DB37A7004FB336 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				754F522A16DA922C00902FAF /* PaintingsController.h */,
+				754F522B16DA922C00902FAF /* PaintingsController.m */,
+				754F522D16DA923800902FAF /* Painting.h */,
+				754F522E16DA923800902FAF /* Painting.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		75E9309216DB37CE004FB336 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				7569B2C216D6C814001B072E /* MainMenu.xib */,
+				754F523416DAC19400902FAF /* PaintingsWindowController.xib */,
+				7550F9CC16D6EA7200DFC764 /* CropController.xib */,
+			);
+			name = Nibs;
+			sourceTree = "<group>";
+		};
+		75E9309316DB37EB004FB336 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				754F523716DAC42F00902FAF /* PaintingsView.h */,
+				754F523816DAC42F00902FAF /* PaintingsView.m */,
+				7550F9CF16D6EB0200DFC764 /* CropView.h */,
+				7550F9D016D6EB0200DFC764 /* CropView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		75E9309416DB3803004FB336 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7569B2BF16D6C814001B072E /* AppDelegate.h */,
+				7569B2C016D6C814001B072E /* AppDelegate.m */,
+				754F523216DAC19400902FAF /* PaintingsWindowController.h */,
+				754F523316DAC19400902FAF /* PaintingsWindowController.m */,
+				7550F9CA16D6EA7200DFC764 /* CropController.h */,
+				7550F9CB16D6EA7200DFC764 /* CropController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,6 +248,8 @@
 				7550F9CE16D6EA7200DFC764 /* CropController.xib in Resources */,
 				7550F9D316D6F05300DFC764 /* two.jpg in Resources */,
 				755F424016D9693400B38099 /* plus.png in Resources */,
+				754F523616DAC19400902FAF /* PaintingsWindowController.xib in Resources */,
+				7566D22F16DAD82400A0516B /* kz.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +264,10 @@
 				7569B2C116D6C814001B072E /* AppDelegate.m in Sources */,
 				7550F9CD16D6EA7200DFC764 /* CropController.m in Sources */,
 				7550F9D116D6EB0200DFC764 /* CropView.m in Sources */,
+				754F522C16DA922C00902FAF /* PaintingsController.m in Sources */,
+				754F522F16DA923800902FAF /* Painting.m in Sources */,
+				754F523516DAC19400902FAF /* PaintingsWindowController.m in Sources */,
+				754F523916DAC42F00902FAF /* PaintingsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
