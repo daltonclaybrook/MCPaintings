@@ -12,8 +12,8 @@
 		754F523516DAC19400902FAF /* PaintingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754F523316DAC19400902FAF /* PaintingsWindowController.m */; };
 		754F523616DAC19400902FAF /* PaintingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 754F523416DAC19400902FAF /* PaintingsWindowController.xib */; };
 		754F523916DAC42F00902FAF /* PaintingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 754F523816DAC42F00902FAF /* PaintingsView.m */; };
-		7550F9CD16D6EA7200DFC764 /* CropController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7550F9CB16D6EA7200DFC764 /* CropController.m */; };
-		7550F9CE16D6EA7200DFC764 /* CropController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7550F9CC16D6EA7200DFC764 /* CropController.xib */; };
+		7550F9CD16D6EA7200DFC764 /* CropWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7550F9CB16D6EA7200DFC764 /* CropWindowController.m */; };
+		7550F9CE16D6EA7200DFC764 /* CropWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7550F9CC16D6EA7200DFC764 /* CropWindowController.xib */; };
 		7550F9D116D6EB0200DFC764 /* CropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7550F9D016D6EB0200DFC764 /* CropView.m */; };
 		7550F9D316D6F05300DFC764 /* two.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7550F9D216D6F05300DFC764 /* two.jpg */; };
 		755F423E16D9455300B38099 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755F423D16D9455300B38099 /* QuartzCore.framework */; };
@@ -37,9 +37,9 @@
 		754F523416DAC19400902FAF /* PaintingsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaintingsWindowController.xib; sourceTree = "<group>"; };
 		754F523716DAC42F00902FAF /* PaintingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintingsView.h; sourceTree = "<group>"; };
 		754F523816DAC42F00902FAF /* PaintingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintingsView.m; sourceTree = "<group>"; };
-		7550F9CA16D6EA7200DFC764 /* CropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropController.h; sourceTree = "<group>"; };
-		7550F9CB16D6EA7200DFC764 /* CropController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropController.m; sourceTree = "<group>"; };
-		7550F9CC16D6EA7200DFC764 /* CropController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CropController.xib; sourceTree = "<group>"; };
+		7550F9CA16D6EA7200DFC764 /* CropWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropWindowController.h; sourceTree = "<group>"; };
+		7550F9CB16D6EA7200DFC764 /* CropWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropWindowController.m; sourceTree = "<group>"; };
+		7550F9CC16D6EA7200DFC764 /* CropWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CropWindowController.xib; sourceTree = "<group>"; };
 		7550F9CF16D6EB0200DFC764 /* CropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropView.h; sourceTree = "<group>"; };
 		7550F9D016D6EB0200DFC764 /* CropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropView.m; sourceTree = "<group>"; };
 		7550F9D216D6F05300DFC764 /* two.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = two.jpg; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 			children = (
 				7569B2C216D6C814001B072E /* MainMenu.xib */,
 				754F523416DAC19400902FAF /* PaintingsWindowController.xib */,
-				7550F9CC16D6EA7200DFC764 /* CropController.xib */,
+				7550F9CC16D6EA7200DFC764 /* CropWindowController.xib */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -185,8 +185,8 @@
 				7569B2C016D6C814001B072E /* AppDelegate.m */,
 				754F523216DAC19400902FAF /* PaintingsWindowController.h */,
 				754F523316DAC19400902FAF /* PaintingsWindowController.m */,
-				7550F9CA16D6EA7200DFC764 /* CropController.h */,
-				7550F9CB16D6EA7200DFC764 /* CropController.m */,
+				7550F9CA16D6EA7200DFC764 /* CropWindowController.h */,
+				7550F9CB16D6EA7200DFC764 /* CropWindowController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -245,7 +245,7 @@
 				7569B2B816D6C814001B072E /* InfoPlist.strings in Resources */,
 				7569B2BE16D6C814001B072E /* Credits.rtf in Resources */,
 				7569B2C416D6C814001B072E /* MainMenu.xib in Resources */,
-				7550F9CE16D6EA7200DFC764 /* CropController.xib in Resources */,
+				7550F9CE16D6EA7200DFC764 /* CropWindowController.xib in Resources */,
 				7550F9D316D6F05300DFC764 /* two.jpg in Resources */,
 				755F424016D9693400B38099 /* plus.png in Resources */,
 				754F523616DAC19400902FAF /* PaintingsWindowController.xib in Resources */,
@@ -262,7 +262,7 @@
 			files = (
 				7569B2BA16D6C814001B072E /* main.m in Sources */,
 				7569B2C116D6C814001B072E /* AppDelegate.m in Sources */,
-				7550F9CD16D6EA7200DFC764 /* CropController.m in Sources */,
+				7550F9CD16D6EA7200DFC764 /* CropWindowController.m in Sources */,
 				7550F9D116D6EB0200DFC764 /* CropView.m in Sources */,
 				754F522C16DA922C00902FAF /* PaintingsController.m in Sources */,
 				754F522F16DA923800902FAF /* Painting.m in Sources */,

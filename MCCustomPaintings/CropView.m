@@ -44,7 +44,7 @@ static NSString *trackingAreaRect = @"rect";
 
 @implementation CropView
 
-@synthesize image = _image;
+@synthesize image = _image, aspectRatio = _aspectRatio;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -65,18 +65,7 @@ static NSString *trackingAreaRect = @"rect";
 - (void)drawRect:(NSRect)dirtyRect
 {
     if (self.image) {
-        CGSize paddedViewSize = CGSizeMake(self.bounds.size.width-(padding*2.0), self.bounds.size.height-(padding * 2.0));
-        NSRect newRect = NSZeroRect;
-        if (self.image.size.width/self.image.size.height >= paddedViewSize.width/paddedViewSize.height) {
-            //Width is greater than ratio
-            newRect.size = NSMakeSize(paddedViewSize.width, (self.image.size.height * paddedViewSize.width/self.image.size.width));
-        } else {
-            //Height is greater
-            newRect.size = NSMakeSize((self.image.size.width * paddedViewSize.height/self.image.size.height), paddedViewSize.height);
-        }
-        newRect.origin = NSMakePoint((paddedViewSize.width-newRect.size.width)/2.0 + padding, (paddedViewSize.height-newRect.size.height)/2.0 + padding);
-        self.imageRect = newRect;
-        [self.image drawInRect:newRect fromRect:NSMakeRect(0, 0, self.image.size.width, self.image.size.height) operation:NSCompositeSourceOver fraction:1.0];
+        [self.image drawInRect:self.imageRect fromRect:NSMakeRect(0, 0, self.image.size.width, self.image.size.height) operation:NSCompositeSourceOver fraction:1.0];
         
         if ((self.cropBlackPath == nil) || (self.cropWhitePath == nil) || (self.corners == nil)) {
             [self setupCropRect];
@@ -98,6 +87,33 @@ static NSString *trackingAreaRect = @"rect";
             [corner fill];
         }
     }
+}
+
+- (void)setImage:(NSImage *)image {
+    _image = image;
+    CGSize paddedViewSize = CGSizeMake(self.bounds.size.width-(padding*2.0), self.bounds.size.height-(padding * 2.0));
+    NSRect newRect = NSZeroRect;
+    if (self.image.size.width/self.image.size.height >= paddedViewSize.width/paddedViewSize.height) {
+        //Width is greater than ratio
+        newRect.size = NSMakeSize(paddedViewSize.width, (self.image.size.height * paddedViewSize.width/self.image.size.width));
+    } else {
+        //Height is greater
+        newRect.size = NSMakeSize((self.image.size.width * paddedViewSize.height/self.image.size.height), paddedViewSize.height);
+    }
+    newRect.origin = NSMakePoint((paddedViewSize.width-newRect.size.width)/2.0 + padding, (paddedViewSize.height-newRect.size.height)/2.0 + padding);
+    self.imageRect = newRect;
+}
+
+- (void)setAspectRatio:(AspectRatio)aspectRatio {
+    _aspectRatio = aspectRatio;
+    [self setupCropRect];
+}
+
+- (NSRect)adjustedCropRect {
+    NSRect cropRect = NSMakeRect(self.cropRect.origin.x-self.imageRect.origin.x, self.cropRect.origin.y-self.imageRect.origin.y, self.cropRect.size.width, self.cropRect.size.height);
+    CGFloat modifier = self.image.size.width/self.imageRect.size.width;
+    
+    return NSMakeRect(cropRect.origin.x*modifier, cropRect.origin.y*modifier, cropRect.size.width*modifier, cropRect.size.height*modifier);
 }
 
 #pragma mark Mouse Tracking
@@ -187,21 +203,21 @@ static NSString *trackingAreaRect = @"rect";
 
 #pragma mark Private Methods
 
-- (void)setupCropRect {
-    NSSize viewSize = self.bounds.size;
-    CGFloat startingHeight = 0;
+- (void)setupCropRect {    
+    CGFloat rectWidth = startingRectWidth;
+    CGFloat rectHeight = 0;
     switch (self.aspectRatio) {
         case AspectRatio1to1: {
-            startingHeight = startingRectWidth;
+            rectHeight = rectWidth;
             break;
         } case AspectRatio1to2: {
-            startingHeight = startingRectWidth*2.0;
+            rectHeight = rectWidth*2.0;
             break;
         } case AspectRatio2to1: {
-            startingHeight = startingRectWidth/2.0;
+            rectHeight = rectWidth/2.0;
             break;
         } case AspectRatio4to3: {
-            startingHeight = startingRectWidth/4.0*3.0;
+            rectHeight = rectWidth/4.0*3.0;
             break;
         }
     }
@@ -209,29 +225,36 @@ static NSString *trackingAreaRect = @"rect";
     CGFloat dashes[] = {
         5.0, 5.0
     };
-    self.cropRect = NSMakeRect((viewSize.width-startingRectWidth)/2.0, (viewSize.height-startingHeight)/2.0, startingRectWidth, startingHeight);
+    
+    NSRect cropRect = NSMakeRect(0, 0, (int)rectWidth, (int)rectHeight);
+    if (self.imageRect.size.width < rectWidth) {
+        cropRect.size = NSMakeSize((int)self.imageRect.size.width, (int)(self.imageRect.size.width/rectWidth*rectHeight));
+    } else if (self.imageRect.size.height < rectHeight) {
+        cropRect.size = NSMakeSize((int)(self.imageRect.size.height/rectHeight*rectWidth), (int)self.imageRect.size.height);
+    }
+    cropRect.origin = NSMakePoint((int)(self.imageRect.origin.x + (self.imageRect.size.width-cropRect.size.width)/2.0f) + 0.5f, (int)(self.imageRect.origin.y + (self.imageRect.size.height-cropRect.size.height)/2.0f) + 0.5f);
+    self.cropRect = cropRect;
+    
     if (self.cropBlackPath == nil) {
-        self.cropBlackPath = [NSBezierPath bezierPathWithRect:self.cropRect];
         [self.cropBlackPath setLineWidth:1.0];
         [self.cropBlackPath setLineDash:dashes count:2 phase:0.0];
     }
+    self.cropBlackPath = [NSBezierPath bezierPathWithRect:self.cropRect];
     if (self.cropWhitePath == nil) {
-        self.cropWhitePath = [NSBezierPath bezierPathWithRect:self.cropRect];
         [self.cropWhitePath setLineWidth:1.0];
         [self.cropBlackPath setLineDash:dashes count:2 phase:5.0];
     }
+    self.cropWhitePath = [NSBezierPath bezierPathWithRect:self.cropRect];
     
-    if (self.corners == nil) {
-        NSBezierPath *corner1 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(self.cropRect.origin.x-cornerDotRadius, self.cropRect.origin.y-cornerDotRadius, cornerDotRadius*2.0, cornerDotRadius*2.0)];
-        [corner1 setLineWidth:1.0f];
-        NSBezierPath *corner2 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(self.cropRect.origin.x+self.cropRect.size.width-cornerDotRadius, self.cropRect.origin.y-cornerDotRadius, cornerDotRadius*2.0, cornerDotRadius*2.0)];
-        [corner2 setLineWidth:1.0f];
-        NSBezierPath *corner3 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(self.cropRect.origin.x+self.cropRect.size.width-cornerDotRadius, self.cropRect.origin.y+self.cropRect.size.height-cornerDotRadius, cornerDotRadius*2.0, cornerDotRadius*2.0)];
-        [corner3 setLineWidth:1.0f];
-        NSBezierPath *corner4 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(self.cropRect.origin.x-cornerDotRadius, self.cropRect.origin.y+self.cropRect.size.height-cornerDotRadius, cornerDotRadius*2.0, cornerDotRadius*2.0)];
-        [corner4 setLineWidth:1.0f];
-        self.corners = [[NSArray alloc] initWithObjects:corner1, corner2, corner3, corner4, nil];
-    }
+    NSBezierPath *corner1 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(self.cropRect.origin.x-cornerDotRadius, self.cropRect.origin.y-cornerDotRadius, cornerDotRadius*2.0, cornerDotRadius*2.0)];
+    [corner1 setLineWidth:1.0f];
+    NSBezierPath *corner2 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(self.cropRect.origin.x+self.cropRect.size.width-cornerDotRadius, self.cropRect.origin.y-cornerDotRadius, cornerDotRadius*2.0, cornerDotRadius*2.0)];
+    [corner2 setLineWidth:1.0f];
+    NSBezierPath *corner3 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(self.cropRect.origin.x+self.cropRect.size.width-cornerDotRadius, self.cropRect.origin.y+self.cropRect.size.height-cornerDotRadius, cornerDotRadius*2.0, cornerDotRadius*2.0)];
+    [corner3 setLineWidth:1.0f];
+    NSBezierPath *corner4 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(self.cropRect.origin.x-cornerDotRadius, self.cropRect.origin.y+self.cropRect.size.height-cornerDotRadius, cornerDotRadius*2.0, cornerDotRadius*2.0)];
+    [corner4 setLineWidth:1.0f];
+    self.corners = [[NSArray alloc] initWithObjects:corner1, corner2, corner3, corner4, nil];
     
     NSPoint base = [self.window convertScreenToBase:[NSEvent mouseLocation]];
     NSPoint mousePoint = [self convertPoint:base fromView:nil];
@@ -274,10 +297,10 @@ static NSString *trackingAreaRect = @"rect";
 }
 
 - (void)resizeRectWithPoint:(NSPoint)point {
-    if (point.x < self.imageRect.origin.x) point.x = self.imageRect.origin.x;
-    if (point.x > self.imageRect.origin.x+self.imageRect.size.width) point.x = self.imageRect.origin.x+self.imageRect.size.width;
-    if (point.y < self.imageRect.origin.y) point.y = self.imageRect.origin.y;
-    if (point.y > self.imageRect.origin.y+self.imageRect.size.height) point.y = self.imageRect.origin.y+self.imageRect.size.height;
+    if (point.x < self.imageRect.origin.x) point.x = (int)self.imageRect.origin.x + 0.5f;   //Add .5 to prevent blur
+    if (point.x > self.imageRect.origin.x+self.imageRect.size.width) point.x = (int)(self.imageRect.origin.x+self.imageRect.size.width) - 0.5f;
+    if (point.y < self.imageRect.origin.y) point.y = (int)self.imageRect.origin.y + 0.5f;
+    if (point.y > self.imageRect.origin.y+self.imageRect.size.height) point.y = (int)(self.imageRect.origin.y+self.imageRect.size.height) - 0.5f;
     
     NSRect newRect = NSZeroRect;
     switch (self.draggingCornerIndex) {
@@ -315,7 +338,7 @@ static NSString *trackingAreaRect = @"rect";
             break;
         }
     }
-    
+        
     self.cropRect = newRect;
     [self.cropBlackPath removeAllPoints];
     [self.cropBlackPath appendBezierPathWithRect:newRect];
@@ -326,13 +349,13 @@ static NSString *trackingAreaRect = @"rect";
 }
 
 - (void)moveRectWithPoint:(NSPoint)point {
-    NSPoint pointDifference = NSMakePoint(point.x-self.startMovePoint.x, point.y-self.startMovePoint.y);
+    NSPoint pointDifference = NSMakePoint((int)(point.x-self.startMovePoint.x), (int)(point.y-self.startMovePoint.y));
     NSRect newRect = NSMakeRect(self.startMoveRect.origin.x+pointDifference.x, self.startMoveRect.origin.y+pointDifference.y, self.startMoveRect.size.width, self.startMoveRect.size.height);
     
-    if (newRect.origin.x < self.imageRect.origin.x) newRect.origin.x = self.imageRect.origin.x;
-    if (newRect.origin.y < self.imageRect.origin.y) newRect.origin.y = self.imageRect.origin.y;
-    if (newRect.origin.x+newRect.size.width > self.imageRect.origin.x+self.imageRect.size.width) newRect.origin.x = self.imageRect.origin.x+self.imageRect.size.width-newRect.size.width;
-    if (newRect.origin.y+newRect.size.height > self.imageRect.origin.y+self.imageRect.size.height) newRect.origin.y = self.imageRect.origin.y+self.imageRect.size.height-newRect.size.height;
+    if (newRect.origin.x < self.imageRect.origin.x) newRect.origin.x = (int)self.imageRect.origin.x + 0.5f; //Add .5 to prevent blur
+    if (newRect.origin.y < self.imageRect.origin.y) newRect.origin.y = (int)self.imageRect.origin.y + 0.5f;
+    if (newRect.origin.x+newRect.size.width > self.imageRect.origin.x+self.imageRect.size.width) newRect.origin.x = (int)(self.imageRect.origin.x+self.imageRect.size.width-newRect.size.width) - 0.5f;
+    if (newRect.origin.y+newRect.size.height > self.imageRect.origin.y+self.imageRect.size.height) newRect.origin.y = (int)(self.imageRect.origin.y+self.imageRect.size.height-newRect.size.height) - 0.5f;
     
     self.cropRect = newRect;
     [self.cropBlackPath removeAllPoints];

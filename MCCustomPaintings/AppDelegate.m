@@ -7,8 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "CropController.h"
-#import "PaintingsWindowController.h"
 #import <QuartzCore/QuartzCore.h>
 
 static NSString *mcPath = @"Library/Application Support/minecraft/";
@@ -17,8 +15,10 @@ static NSString *newTexturePackCellID = @"newTexturePack";
 
 @interface AppDelegate ()
 
+@property (nonatomic, strong) PaintingsController *paintingsController;
 @property (nonatomic, strong) PaintingsWindowController *paintingsWindow;
-@property (nonatomic, strong) CropController *cropController;
+@property (nonatomic, strong) CropWindowController *cropWindow;
+@property (nonatomic, strong) Painting *painting;
 
 - (BOOL)loadTexturePackFolder;
 
@@ -28,33 +28,36 @@ static NSString *newTexturePackCellID = @"newTexturePack";
 
 @synthesize texturePacks = _texturePacks;
 
+#pragma mark NSApplicationDelegate Methods
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     if ([self loadTexturePackFolder]) {
-        NSLog(@"packs: %@", [self.texturePacks description]);
         [self.tableView reloadData];
     }
 }
 
+#pragma mark Public Methods
+
 - (IBAction)showCrop:(id)sender {
-    self.cropController = [[CropController alloc] initWithWindowNibName:@"CropController"];
+    self.cropWindow = [[CropWindowController alloc] initWithWindowNibName:@"CropController"];
     NSImage *image = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"two" ofType:@"jpg"]];
-    [self.cropController setImage:image];
-    [self.cropController showWindow:self];
+    [self.cropWindow setImage:image];
+    [self.cropWindow showWindow:self];
 }
 
 - (IBAction)start:(id)sender {
     NSString *fullPath = nil;
     if ([self.tableView selectedRow] == 0) {
-         fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@bin/minecraft1.jar", mcPath]];
+        fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@bin/minecraft.jar", mcPath]];
     } else {
         fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@texturepacks/%@", mcPath, [self.texturePacks objectAtIndex:self.tableView.selectedRow-1]]];
     }
-    PaintingsController *paintController = [[PaintingsController alloc] initWithSourcePath:fullPath];
-    self.paintingsWindow = [[PaintingsWindowController alloc] initWithWindowNibName:@"PaintingsWindowController"];
-    [self.paintingsWindow setPaintingsController:paintController];
-    [self.paintingsWindow showWindow:self];
-    [self.window close];
+    if (self.paintingsWindow == nil) {
+        self.paintingsWindow = [[PaintingsWindowController alloc] initWithWindowNibName:@"PaintingsWindowController"];
+        [self.paintingsWindow setDelegate:self];
+    }
+    self.paintingsController = [[PaintingsController alloc] initWithSourcePath:fullPath delegate:self];
 }
 
 #pragma mark Private Methods
@@ -76,7 +79,7 @@ static NSString *newTexturePackCellID = @"newTexturePack";
         if (!directoryContentsError) {
             NSMutableArray *texturePacks = [NSMutableArray array];
             for (NSString *file in contents) {
-                if ([[file pathExtension] isEqualToString:@"zip"]) {
+                if ([[[file pathExtension] lowercaseString] isEqualToString:@"zip"]) {
                     [texturePacks addObject:file];
                 } else {
                     BOOL directory;
@@ -92,6 +95,61 @@ static NSString *newTexturePackCellID = @"newTexturePack";
         }
     }
     return NO;
+}
+
+#pragma mark PaintingsControllerDelegate
+
+- (void)paintingsController:(PaintingsController *)pc loadedSource:(NSImage *)source {
+    [self.paintingsWindow setPaintingsController:pc];
+    [self.paintingsWindow showWindow:self];
+    [self.window close];
+}
+
+- (NSString *)paintingsControllerNameChallenge:(PaintingsController *)pc {
+    return nil;
+}
+
+#pragma mark PaintingsWindowControllerDelegate Methods
+
+- (void)paintingsWindowController:(PaintingsWindowController *)pwc selectedPainting:(Painting *)painting {
+    self.painting = painting;
+    if (self.cropWindow == nil) {
+        self.cropWindow = [[CropWindowController alloc] initWithWindowNibName:@"CropWindowController"];
+        [self.cropWindow setDelegate:self];
+    }
+    [self.cropWindow setCropSize:painting.rect.size];
+    [self.cropWindow showWindow:self];
+    [pwc close];
+}
+
+- (void)paintingsWindowControllerWillClose:(PaintingsWindowController *)pwc {
+    if (![self.cropWindow.window isVisible]) {
+        [self.tableView deselectAll:self];
+        [self.window makeKeyAndOrderFront:self];
+    }
+}
+
+#pragma mark CropWindowControllerDelegate Methods
+
+- (void)cropWindowController:(CropWindowController *)cwc didCropImage:(NSImage *)image {
+    self.painting.image = image;
+    NSAlert *alert = [[NSAlert alloc] init];
+    if ([self.paintingsController saveSourceWithPainting:self.painting preserveFrame:YES]) {
+        [alert setMessageText:@"Success!"];
+    } else {
+        [alert setMessageText:@"Failed to save image"];
+    }
+    [self.tableView deselectAll:self];
+    [self.window makeKeyAndOrderFront:self];
+    [cwc close];
+    [alert runModal];
+}
+
+- (void)cropWindowControllerWillClose:(CropWindowController *)cwc {
+    if (![self.window isVisible]) {
+        [self.tableView deselectAll:self];
+        [self.window makeKeyAndOrderFront:self];
+    }
 }
 
 #pragma mark NSTableViewDelegate and DataSource Methods

@@ -20,4 +20,6 @@ typedef enum {
 @property (nonatomic, strong) NSImage *image;
 @property (nonatomic) AspectRatio aspectRatio;
 
+- (NSRect)adjustedCropRect;
+
 @end

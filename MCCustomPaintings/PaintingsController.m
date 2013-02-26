@@ -8,75 +8,129 @@
 
 #import "PaintingsController.h"
 
+static NSString *mcPath = @"Library/Application Support/minecraft/";
 static NSString *temporaryFolder = @".MCPaintingsTemp/";
 
 @interface PaintingsController ()
 
-- (NSImage *)loadSourceFromArchivePath:(NSString *)path;
+@property (nonatomic, strong) NSString *sourcePath;
+@property (nonatomic, strong) NSString *texturePackFolderPath;
+
+- (void)loadSourceFromJARPath:(NSString *)path;
+- (void)extractArchiveAndLoadSource:(NSString *)path;
 - (NSImage *)loadSourceFromFolderPath:(NSString *)path;
 - (NSArray *)loadPaintingsFromSource:(NSImage *)source;
+- (NSImage *)maxImageRepOfSource:(NSImage *)source;
 
 @end
 
 @implementation PaintingsController
 
-@synthesize sourceImage = _sourceImage, paintings = _paintings;
+@synthesize delegate = _delegate, sourceImage = _sourceImage, paintings = _paintings;
 
-- (id)initWithSourcePath:(NSString *)path {
+- (id)initWithSourcePath:(NSString *)path delegate:(id <PaintingsControllerDelegate>)delegate {
     self = [super init];
     if (self) {
+        _delegate = delegate;
         if (path) {
+            self.sourcePath = path;
             BOOL isDirectory;
             if ([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory]) {
                 NSImage *sourceImage = nil;
                 if (isDirectory) {
                     sourceImage = [self loadSourceFromFolderPath:path];
+                    _sourceImage = [self maxImageRepOfSource:sourceImage];
+                    _paintings = [self loadPaintingsFromSource:self.sourceImage];
+                    if ([self.delegate respondsToSelector:@selector(paintingsController:loadedSource:)]) {
+                        [self.delegate paintingsController:self loadedSource:self.sourceImage];
+                    }
                 } else {
-                    sourceImage = [self loadSourceFromArchivePath:path];
+                    if ([[[path pathExtension] lowercaseString] isEqualToString:@"jar"]) {
+                        [self loadSourceFromJARPath:path];
+                    } else {
+                        [self extractArchiveAndLoadSource:path];
+                    }
                 }
-                
-                NSInteger width = 0;
-                NSInteger height = 0;
-                for (NSImageRep * imageRep in [sourceImage representations]) {
-                    if ([imageRep pixelsWide] > width) width = [imageRep pixelsWide];
-                    if ([imageRep pixelsHigh] > height) height = [imageRep pixelsHigh];
-                }
-                _sourceImage = [[NSImage alloc] initWithSize:NSMakeSize((CGFloat)width, (CGFloat)height)];
-                [self.sourceImage addRepresentations:[sourceImage representations]];
-                _paintings = [self loadPaintingsFromSource:self.sourceImage];
             }
         }
     }
     return self;
 }
 
+- (void)setTexturePackName:(NSString *)name {
+    self.texturePackFolderPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@texturepacks/%@", mcPath, name]];
+}
+
+- (BOOL)saveSourceWithPainting:(Painting *)painting preserveFrame:(BOOL)preserve {
+    CGFloat padding = (preserve) ? 1.0 : 0.0;
+    [self.sourceImage lockFocus];
+    [painting.image drawInRect:NSMakeRect(painting.rect.origin.x*16.0+padding, painting.rect.origin.y*16.0+padding, painting.rect.size.width*16.0-padding*2.0, painting.rect.size.height*16.0-padding*2.0) fromRect:NSMakeRect(0, 0, painting.image.size.width, painting.image.size.height) operation:NSCompositeSourceOver fraction:1.0];
+    [self.sourceImage unlockFocus];
+    
+    NSData *imageData = [self.sourceImage TIFFRepresentation];
+    NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
+    NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
+    imageData = [imageRep representationUsingType:NSJPEGFileType properties:imageProps];
+    //[imageData writeToFile:@"/Users/daltonclaybrook/Desktop/file.jpg" atomically:NO];
+    
+    if (self.texturePackFolderPath) {
+        return [imageData writeToFile:[self.texturePackFolderPath stringByAppendingPathComponent:@"art/kz.png"] atomically:NO];
+    }
+    return NO;
+}
+
 #pragma mark Private Methods
 
-- (NSImage *)loadSourceFromArchivePath:(NSString *)path {
+- (void)loadSourceFromJARPath:(NSString *)path {
+    self.texturePackFolderPath = nil;
     NSTask *extractFile = [[NSTask alloc] init];
     NSString *tempFolderPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:temporaryFolder];
     extractFile.launchPath = @"/usr/bin/unzip";
     extractFile.arguments = [NSArray arrayWithObjects:@"-j", path, @"art/kz.png", @"-d", tempFolderPath, nil];
-    [extractFile launch];
-    [extractFile waitUntilExit];
-    
-    NSImage *sourceImage;
-    if ([extractFile terminationStatus] == 0) {
-        sourceImage = [[NSImage alloc] initWithContentsOfFile:[tempFolderPath stringByAppendingPathComponent:@"kz.png"]];
-        NSError *tempDeleteError = NULL;
-        [[NSFileManager defaultManager] removeItemAtPath:tempFolderPath error:&tempDeleteError];
-        if (tempDeleteError) {
-            NSLog(@"error: %@", [tempDeleteError description]);
+    extractFile.terminationHandler = ^(NSTask *task) {
+        NSImage *image = nil;
+        if (task.terminationStatus == 0) {
+            image = [[NSImage alloc] initWithContentsOfFile:[tempFolderPath stringByAppendingPathComponent:@"kz.png"]];
+            [[NSFileManager defaultManager] removeItemAtPath:tempFolderPath error:NULL];
         } else {
-            NSLog(@"No Error");
+            image = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"kz" ofType:@"png"]];
         }
-    } else {
-        sourceImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"kz" ofType:@"png"]];
-    }
-    return sourceImage;
+        self.sourceImage = [self maxImageRepOfSource:image];
+        self.paintings = [self loadPaintingsFromSource:self.sourceImage];
+        dispatch_async (dispatch_get_main_queue (), ^(void) {
+            if ([self.delegate respondsToSelector:@selector(paintingsController:loadedSource:)]) {
+                [self.delegate paintingsController:self loadedSource:self.sourceImage];
+            }
+        });
+    };
+    [extractFile launch];
+}
+
+- (void)extractArchiveAndLoadSource:(NSString *)path {
+    NSTask *extractFile = [[NSTask alloc] init];
+    self.texturePackFolderPath = [path substringToIndex:path.length-([[path pathExtension] length]+1)];
+    extractFile.launchPath = @"/usr/bin/unzip";
+    extractFile.arguments = [NSArray arrayWithObjects:@"-o", path, @"-d", self.texturePackFolderPath, nil];
+    extractFile.terminationHandler = ^(NSTask *task) {
+        NSImage *image = nil;
+        if (task.terminationStatus == 0) {
+            image = [[NSImage alloc] initWithContentsOfFile:[self.texturePackFolderPath stringByAppendingPathComponent:@"art/kz.png"]];
+            [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+        }
+        if (!image) image = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"kz" ofType:@"png"]];
+        self.sourceImage = [self maxImageRepOfSource:image];
+        self.paintings = [self loadPaintingsFromSource:self.sourceImage];
+        dispatch_async (dispatch_get_main_queue (), ^(void) {
+            if ([self.delegate respondsToSelector:@selector(paintingsController:loadedSource:)]) {
+                [self.delegate paintingsController:self loadedSource:self.sourceImage];
+            }
+        });
+    };
+    [extractFile launch];
 }
 
 - (NSImage *)loadSourceFromFolderPath:(NSString *)path {
+    self.texturePackFolderPath = path;
     NSImage *sourceImage = [[NSImage alloc] initWithContentsOfFile:[path stringByAppendingPathComponent:@"art/kz.png"]];
     if (!sourceImage) {
         sourceImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"kz" ofType:@"png"]];
@@ -123,6 +177,18 @@ static NSString *temporaryFolder = @".MCPaintingsTemp/";
     }
     
     return (NSArray *)paintings;
+}
+
+- (NSImage *)maxImageRepOfSource:(NSImage *)source {
+    NSInteger width = 0;
+    NSInteger height = 0;
+    for (NSImageRep * imageRep in [source representations]) {
+        if ([imageRep pixelsWide] > width) width = [imageRep pixelsWide];
+        if ([imageRep pixelsHigh] > height) height = [imageRep pixelsHigh];
+    }
+    NSImage *bigImage = [[NSImage alloc] initWithSize:NSMakeSize((CGFloat)width, (CGFloat)height)];
+    [bigImage addRepresentations:[source representations]];
+    return bigImage;
 }
 
 //- (NSArray *)loadPaintingsFromSource:(NSImage *)source {
