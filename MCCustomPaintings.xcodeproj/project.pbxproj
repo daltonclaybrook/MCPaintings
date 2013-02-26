@@ -25,6 +25,8 @@
 		7569B2BE16D6C814001B072E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7569B2BC16D6C814001B072E /* Credits.rtf */; };
 		7569B2C116D6C814001B072E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7569B2C016D6C814001B072E /* AppDelegate.m */; };
 		7569B2C416D6C814001B072E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7569B2C216D6C814001B072E /* MainMenu.xib */; };
+		757DAC9B16DD055C00D8DFA5 /* NameSheetWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 757DAC9916DD055C00D8DFA5 /* NameSheetWindowController.m */; };
+		757DAC9C16DD055C00D8DFA5 /* NameSheetWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 757DAC9A16DD055C00D8DFA5 /* NameSheetWindowController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +61,9 @@
 		7569B2BF16D6C814001B072E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7569B2C016D6C814001B072E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		7569B2C316D6C814001B072E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		757DAC9816DD055C00D8DFA5 /* NameSheetWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameSheetWindowController.h; sourceTree = "<group>"; };
+		757DAC9916DD055C00D8DFA5 /* NameSheetWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameSheetWindowController.m; sourceTree = "<group>"; };
+		757DAC9A16DD055C00D8DFA5 /* NameSheetWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NameSheetWindowController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +168,7 @@
 				7569B2C216D6C814001B072E /* MainMenu.xib */,
 				754F523416DAC19400902FAF /* PaintingsWindowController.xib */,
 				7550F9CC16D6EA7200DFC764 /* CropWindowController.xib */,
+				757DAC9A16DD055C00D8DFA5 /* NameSheetWindowController.xib */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -187,6 +193,8 @@
 				754F523316DAC19400902FAF /* PaintingsWindowController.m */,
 				7550F9CA16D6EA7200DFC764 /* CropWindowController.h */,
 				7550F9CB16D6EA7200DFC764 /* CropWindowController.m */,
+				757DAC9816DD055C00D8DFA5 /* NameSheetWindowController.h */,
+				757DAC9916DD055C00D8DFA5 /* NameSheetWindowController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -250,6 +258,7 @@
 				755F424016D9693400B38099 /* plus.png in Resources */,
 				754F523616DAC19400902FAF /* PaintingsWindowController.xib in Resources */,
 				7566D22F16DAD82400A0516B /* kz.png in Resources */,
+				757DAC9C16DD055C00D8DFA5 /* NameSheetWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +277,7 @@
 				754F522F16DA923800902FAF /* Painting.m in Sources */,
 				754F523516DAC19400902FAF /* PaintingsWindowController.m in Sources */,
 				754F523916DAC42F00902FAF /* PaintingsView.m in Sources */,
+				757DAC9B16DD055C00D8DFA5 /* NameSheetWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

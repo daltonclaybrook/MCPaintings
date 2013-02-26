@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) id <CropWindowControllerDelegate> delegate;
 @property (weak) IBOutlet CropView *cropView;
+@property (weak) IBOutlet NSButton *preserveBorderBox;
 @property (nonatomic, strong) NSImage *image;
 @property (nonatomic) NSSize cropSize;
 
@@ -25,7 +26,7 @@
 @protocol CropWindowControllerDelegate <NSObject>
 
 @optional
-- (void)cropWindowController:(CropWindowController *)cwc didCropImage:(NSImage *)image;
+- (void)cropWindowController:(CropWindowController *)cwc didCropImage:(NSImage *)image preserveBorder:(BOOL)preserve;
 - (void)cropWindowControllerWillClose:(CropWindowController *)cwc;
 
 @end

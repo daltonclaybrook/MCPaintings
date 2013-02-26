@@ -57,7 +57,7 @@
 }
 
 - (IBAction)cropImage:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(cropWindowController:didCropImage:)]) {
+    if ([self.delegate respondsToSelector:@selector(cropWindowController:didCropImage:preserveBorder:)]) {
         NSRect cropRect = [self.cropView adjustedCropRect];
     
         NSImage *finalImage = [[NSImage alloc] initWithSize:NSMakeSize(self.cropSize.width*16.0, self.cropSize.height*16.0)];
@@ -65,7 +65,7 @@
         [self.cropView.image drawInRect:NSMakeRect(0, 0, finalImage.size.width, finalImage.size.height) fromRect:cropRect operation:NSCompositeSourceOver fraction:1.0];
         [finalImage unlockFocus];
     
-        [self.delegate cropWindowController:self didCropImage:finalImage];
+        [self.delegate cropWindowController:self didCropImage:finalImage preserveBorder:self.preserveBorderBox.state];
     }
 }
 

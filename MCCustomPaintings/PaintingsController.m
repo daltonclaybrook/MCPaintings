@@ -59,6 +59,7 @@ static NSString *temporaryFolder = @".MCPaintingsTemp/";
 
 - (void)setTexturePackName:(NSString *)name {
     self.texturePackFolderPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@texturepacks/%@", mcPath, name]];
+    NSLog(@"name: %@", self.texturePackFolderPath);
 }
 
 - (BOOL)saveSourceWithPainting:(Painting *)painting preserveFrame:(BOOL)preserve {
@@ -74,7 +75,14 @@ static NSString *temporaryFolder = @".MCPaintingsTemp/";
     //[imageData writeToFile:@"/Users/daltonclaybrook/Desktop/file.jpg" atomically:NO];
     
     if (self.texturePackFolderPath) {
-        return [imageData writeToFile:[self.texturePackFolderPath stringByAppendingPathComponent:@"art/kz.png"] atomically:NO];
+        NSString *artFolder = [self.texturePackFolderPath stringByAppendingPathComponent:@"art/"];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:artFolder]) {
+            if (![[NSFileManager defaultManager] createDirectoryAtPath:artFolder withIntermediateDirectories:YES attributes:nil error:NULL]) return NO;
+        }
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[self.texturePackFolderPath stringByAppendingPathComponent:@"pack.txt"]]) {
+            if (![@"Made with MCPaintings" writeToFile:[self.texturePackFolderPath stringByAppendingPathComponent:@"pack.txt"] atomically:NO encoding:NSUTF8StringEncoding error:NULL]) return NO;
+        }
+        return [imageData writeToFile:[artFolder stringByAppendingPathComponent:@"kz.png"] atomically:NO];
     }
     return NO;
 }

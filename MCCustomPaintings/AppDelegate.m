@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "NameSheetWindowController.h"
 #import <QuartzCore/QuartzCore.h>
 
 static NSString *mcPath = @"Library/Application Support/minecraft/";
@@ -18,9 +19,12 @@ static NSString *newTexturePackCellID = @"newTexturePack";
 @property (nonatomic, strong) PaintingsController *paintingsController;
 @property (nonatomic, strong) PaintingsWindowController *paintingsWindow;
 @property (nonatomic, strong) CropWindowController *cropWindow;
+@property (nonatomic, strong) NameSheetWindowController *nameSheet;
 @property (nonatomic, strong) Painting *painting;
 
 - (BOOL)loadTexturePackFolder;
+- (void)showNameSheet;
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 
 @end
 
@@ -48,16 +52,17 @@ static NSString *newTexturePackCellID = @"newTexturePack";
 
 - (IBAction)start:(id)sender {
     NSString *fullPath = nil;
-    if ([self.tableView selectedRow] == 0) {
-        fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@bin/minecraft.jar", mcPath]];
-    } else {
-        fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@texturepacks/%@", mcPath, [self.texturePacks objectAtIndex:self.tableView.selectedRow-1]]];
-    }
     if (self.paintingsWindow == nil) {
         self.paintingsWindow = [[PaintingsWindowController alloc] initWithWindowNibName:@"PaintingsWindowController"];
         [self.paintingsWindow setDelegate:self];
     }
-    self.paintingsController = [[PaintingsController alloc] initWithSourcePath:fullPath delegate:self];
+    if ([self.tableView selectedRow] == 0) {
+        [self showNameSheet];
+        //fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@bin/minecraft.jar", mcPath]];
+    } else {
+        fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@texturepacks/%@", mcPath, [self.texturePacks objectAtIndex:self.tableView.selectedRow-1]]];
+        self.paintingsController = [[PaintingsController alloc] initWithSourcePath:fullPath delegate:self];
+    }
 }
 
 #pragma mark Private Methods
@@ -97,6 +102,19 @@ static NSString *newTexturePackCellID = @"newTexturePack";
     return NO;
 }
 
+- (void)showNameSheet {
+    if (self.nameSheet == nil) {
+        self.nameSheet = [[NameSheetWindowController alloc] initWithWindowNibName:@"NameSheetWindowController"];
+    }
+    [NSApp beginSheet:[self.nameSheet window] modalForWindow:self.window modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+}
+
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+    [sheet orderOut:self];
+    self.paintingsController = [[PaintingsController alloc] initWithSourcePath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@bin/minecraft.jar", mcPath]] delegate:self];
+    [self.paintingsController setTexturePackName:self.nameSheet.nameField.stringValue];
+}
+
 #pragma mark PaintingsControllerDelegate
 
 - (void)paintingsController:(PaintingsController *)pc loadedSource:(NSImage *)source {
@@ -126,21 +144,27 @@ static NSString *newTexturePackCellID = @"newTexturePack";
     if (![self.cropWindow.window isVisible]) {
         [self.tableView deselectAll:self];
         [self.window makeKeyAndOrderFront:self];
+        if ([self loadTexturePackFolder]) {
+            [self.tableView reloadData];
+        }
     }
 }
 
 #pragma mark CropWindowControllerDelegate Methods
 
-- (void)cropWindowController:(CropWindowController *)cwc didCropImage:(NSImage *)image {
+- (void)cropWindowController:(CropWindowController *)cwc didCropImage:(NSImage *)image preserveBorder:(BOOL)preserve {
     self.painting.image = image;
     NSAlert *alert = [[NSAlert alloc] init];
-    if ([self.paintingsController saveSourceWithPainting:self.painting preserveFrame:YES]) {
+    if ([self.paintingsController saveSourceWithPainting:self.painting preserveFrame:preserve]) {
         [alert setMessageText:@"Success!"];
     } else {
         [alert setMessageText:@"Failed to save image"];
     }
     [self.tableView deselectAll:self];
     [self.window makeKeyAndOrderFront:self];
+    if ([self loadTexturePackFolder]) {
+        [self.tableView reloadData];
+    }
     [cwc close];
     [alert runModal];
 }
@@ -149,6 +173,9 @@ static NSString *newTexturePackCellID = @"newTexturePack";
     if (![self.window isVisible]) {
         [self.tableView deselectAll:self];
         [self.window makeKeyAndOrderFront:self];
+        if ([self loadTexturePackFolder]) {
+            [self.tableView reloadData];
+        }
     }
 }
 
