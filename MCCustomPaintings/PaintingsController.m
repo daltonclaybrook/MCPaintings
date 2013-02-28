@@ -72,7 +72,6 @@ static NSString *temporaryFolder = @".MCPaintingsTemp/";
     NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
     imageData = [imageRep representationUsingType:NSJPEGFileType properties:imageProps];
-    //[imageData writeToFile:@"/Users/daltonclaybrook/Desktop/file.jpg" atomically:NO];
     
     if (self.texturePackFolderPath) {
         NSString *artFolder = [self.texturePackFolderPath stringByAppendingPathComponent:@"art/"];
@@ -198,56 +197,5 @@ static NSString *temporaryFolder = @".MCPaintingsTemp/";
     [bigImage addRepresentations:[source representations]];
     return bigImage;
 }
-
-//- (NSArray *)loadPaintingsFromSource:(NSImage *)source {
-//    NSMutableArray *paintings = [NSMutableArray array];
-//    NSRect sectionBox = NSMakeRect(0, 0, 12, 2);
-//    NSSize imageSize = NSMakeSize(1, 1);
-//    
-//    NSRect sectionBoxes[] = {NSMakeRect(0, 0, 12, 2), NSMakeRect(0, 2, 12, 2)};
-//    
-//    for (int i=0; i<imageCount1; i++) {
-//        Painting *painting = [[Painting alloc] initWithSourceImage:source coordinates:NSMakeRect((int)sectionBox.origin.x + (int)(i*imageSize.width)%(int)(sectionBox.size.width), (source.size.height/16-imageSize.height) - ((int)sectionBox.origin.y + floorf((i*imageSize.width)/sectionBox.size.width) * imageSize.height), imageSize.width, imageSize.height)];
-//        [paintings addObject:painting];
-//    }
-//    sectionBox = NSMakeRect(0, 2, 12, 2);
-//    imageSize = NSMakeSize(2, 1);
-//    for (int i=0; i<imageCount2; i++) {
-//        Painting *painting = [[Painting alloc] initWithSourceImage:source coordinates:NSMakeRect((int)sectionBox.origin.x + (int)(i*imageSize.width)%(int)(sectionBox.size.width), (source.size.height/16-imageSize.height) - ((int)sectionBox.origin.y + floorf((i*imageSize.width)/sectionBox.size.width) * imageSize.height), imageSize.width, imageSize.height)];
-//        [paintings addObject:painting];
-//    }
-//    sectionBox = NSMakeRect(0, 4, 12, 2);
-//    imageSize = NSMakeSize(1, 2);
-//    for (int i=0; i<imageCount3; i++) {
-//        Painting *painting = [[Painting alloc] initWithSourceImage:source coordinates:NSMakeRect((int)sectionBox.origin.x + (int)(i*imageSize.width)%(int)(sectionBox.size.width), (source.size.height/16-imageSize.height) - ((int)sectionBox.origin.y + floorf((i*imageSize.width)/sectionBox.size.width) * imageSize.height), imageSize.width, imageSize.height)];
-//        [paintings addObject:painting];
-//    }
-//    sectionBox = NSMakeRect(0, 6, 12, 2);
-//    imageSize = NSMakeSize(4, 2);
-//    for (int i=0; i<imageCount4; i++) {
-//        Painting *painting = [[Painting alloc] initWithSourceImage:source coordinates:NSMakeRect((int)sectionBox.origin.x + (int)(i*imageSize.width)%(int)(sectionBox.size.width), (source.size.height/16-imageSize.height) - ((int)sectionBox.origin.y + floorf((i*imageSize.width)/sectionBox.size.width) * imageSize.height), imageSize.width, imageSize.height)];
-//        [paintings addObject:painting];
-//    }
-//    sectionBox = NSMakeRect(0, 8, 12, 4);
-//    imageSize = NSMakeSize(2, 2);
-//    for (int i=0; i<imageCount5; i++) {
-//        Painting *painting = [[Painting alloc] initWithSourceImage:source coordinates:NSMakeRect((int)sectionBox.origin.x + (int)(i*imageSize.width)%(int)(sectionBox.size.width), (source.size.height/16-imageSize.height) - ((int)sectionBox.origin.y + floorf((i*imageSize.width)/sectionBox.size.width) * imageSize.height), imageSize.width, imageSize.height)];
-//        [paintings addObject:painting];
-//    }
-//    sectionBox = NSMakeRect(12, 4, 4, 6);
-//    imageSize = NSMakeSize(4, 3);
-//    for (int i=0; i<imageCount6; i++) {
-//        Painting *painting = [[Painting alloc] initWithSourceImage:source coordinates:NSMakeRect((int)sectionBox.origin.x + (int)(i*imageSize.width)%(int)(sectionBox.size.width), (source.size.height/16-imageSize.height) - ((int)sectionBox.origin.y + floorf((i*imageSize.width)/sectionBox.size.width) * imageSize.height), imageSize.width, imageSize.height)];
-//        [paintings addObject:painting];
-//    }
-//    sectionBox = NSMakeRect(0, 12, 16, 4);
-//    imageSize = NSMakeSize(4, 4);
-//    for (int i=0; i<imageCount7; i++) {
-//        Painting *painting = [[Painting alloc] initWithSourceImage:source coordinates:NSMakeRect((int)sectionBox.origin.x + (int)(i*imageSize.width)%(int)(sectionBox.size.width), (source.size.height/16-imageSize.height) - ((int)sectionBox.origin.y + floorf((i*imageSize.width)/sectionBox.size.width) * imageSize.height), imageSize.width, imageSize.height)];
-//        [paintings addObject:painting];
-//    }
-//    
-//    return (NSArray *)paintings;
-//}
 
 @end

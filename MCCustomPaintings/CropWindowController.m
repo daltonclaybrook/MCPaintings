@@ -31,21 +31,34 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    if (self.image && !self.cropView.image) {
-        [self.cropView setImage:self.image];
-        [self.cropView setNeedsDisplay:YES];
-    } else {
-        NSOpenPanel *openPanel = [[NSOpenPanel alloc] init];
-        [openPanel setDelegate:self];
-        [openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"jpg", @"jpeg", @"png", @"tiff", @"bmp", nil]];
-        [openPanel setTitle:@"Select a New Image"];
-        [openPanel runModal];
-    }
+//    if (self.image && !self.cropView.image) {
+//        [self.cropView setImage:self.image];
+//        [self.cropView setNeedsDisplay:YES];
+//    } else {
+//        NSOpenPanel *openPanel = [[NSOpenPanel alloc] init];
+//        [openPanel setDelegate:self];
+//        [openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"jpg", @"jpeg", @"png", @"tiff", @"bmp", nil]];
+//        [openPanel setTitle:@"Select a New Image"];
+//        [openPanel runModal];
+//    }
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
     if ([self.delegate respondsToSelector:@selector(cropWindowControllerWillClose:)]) {
         [self.delegate cropWindowControllerWillClose:self];
+    }
+}
+
+- (void)showWindow:(id)sender {
+    [super showWindow:sender];
+    
+    NSOpenPanel *openPanel = [[NSOpenPanel alloc] init];
+    [openPanel setDelegate:self];
+    [openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"jpg", @"jpeg", @"png", @"tiff", @"bmp", nil]];
+    [openPanel setTitle:@"Select a New Image"];
+    
+    if ([openPanel runModal] == NSFileHandlingPanelCancelButton) {
+        [self close];
     }
 }
 

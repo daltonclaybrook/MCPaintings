@@ -17,7 +17,6 @@
 @property (weak) IBOutlet NSButton *startButton;
 @property (nonatomic, strong) NSArray *texturePacks;
 
-- (IBAction)showCrop:(id)sender;
 - (IBAction)start:(id)sender;
 
 @end

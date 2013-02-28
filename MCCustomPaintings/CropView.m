@@ -236,15 +236,22 @@ static NSString *trackingAreaRect = @"rect";
     self.cropRect = cropRect;
     
     if (self.cropBlackPath == nil) {
+        self.cropBlackPath = [NSBezierPath bezierPathWithRect:self.cropRect];
         [self.cropBlackPath setLineWidth:1.0];
         [self.cropBlackPath setLineDash:dashes count:2 phase:0.0];
+    } else {
+        [self.cropBlackPath removeAllPoints];
+        [self.cropBlackPath appendBezierPath:[NSBezierPath bezierPathWithRect:self.cropRect]];
     }
-    self.cropBlackPath = [NSBezierPath bezierPathWithRect:self.cropRect];
+    
     if (self.cropWhitePath == nil) {
+        self.cropWhitePath = [NSBezierPath bezierPathWithRect:self.cropRect];
         [self.cropWhitePath setLineWidth:1.0];
         [self.cropBlackPath setLineDash:dashes count:2 phase:5.0];
+    } else {
+        [self.cropWhitePath removeAllPoints];
+        [self.cropWhitePath appendBezierPath:[NSBezierPath bezierPathWithRect:self.cropRect]];
     }
-    self.cropWhitePath = [NSBezierPath bezierPathWithRect:self.cropRect];
     
     NSBezierPath *corner1 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(self.cropRect.origin.x-cornerDotRadius, self.cropRect.origin.y-cornerDotRadius, cornerDotRadius*2.0, cornerDotRadius*2.0)];
     [corner1 setLineWidth:1.0f];

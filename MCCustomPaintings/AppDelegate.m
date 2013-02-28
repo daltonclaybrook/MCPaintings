@@ -41,14 +41,11 @@ static NSString *newTexturePackCellID = @"newTexturePack";
     }
 }
 
-#pragma mark Public Methods
-
-- (IBAction)showCrop:(id)sender {
-    self.cropWindow = [[CropWindowController alloc] initWithWindowNibName:@"CropController"];
-    NSImage *image = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"two" ofType:@"jpg"]];
-    [self.cropWindow setImage:image];
-    [self.cropWindow showWindow:self];
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+    return YES;
 }
+
+#pragma mark Public Methods
 
 - (IBAction)start:(id)sender {
     NSString *fullPath = nil;
