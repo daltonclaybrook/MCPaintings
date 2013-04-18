@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "NameSheetWindowController.h"
+#import "HDConversionWindowController.h"
 #import <QuartzCore/QuartzCore.h>
 
 static NSString *mcPath = @"Library/Application Support/minecraft/";
@@ -20,11 +21,14 @@ static NSString *newTexturePackCellID = @"newTexturePack";
 @property (nonatomic, strong) PaintingsWindowController *paintingsWindow;
 @property (nonatomic, strong) CropWindowController *cropWindow;
 @property (nonatomic, strong) NameSheetWindowController *nameSheet;
+@property (nonatomic, strong) HDConversionWindowController *hdSheet;
 @property (nonatomic, strong) Painting *painting;
 
 - (BOOL)loadTexturePackFolder;
 - (void)showNameSheet;
-- (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)showHDSheetPreservingBorder:(BOOL)border;
+- (void)didEndNameSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)didEndHDSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 
 @end
 
@@ -103,13 +107,36 @@ static NSString *newTexturePackCellID = @"newTexturePack";
     if (self.nameSheet == nil) {
         self.nameSheet = [[NameSheetWindowController alloc] initWithWindowNibName:@"NameSheetWindowController"];
     }
-    [NSApp beginSheet:[self.nameSheet window] modalForWindow:self.window modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+    [NSApp beginSheet:[self.nameSheet window] modalForWindow:self.window modalDelegate:self didEndSelector:@selector(didEndNameSheet:returnCode:contextInfo:) contextInfo:nil];
 }
 
-- (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+- (void)didEndNameSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
     [sheet orderOut:self];
     self.paintingsController = [[PaintingsController alloc] initWithSourcePath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@bin/minecraft.jar", mcPath]] delegate:self];
     [self.paintingsController setTexturePackName:self.nameSheet.nameField.stringValue];
+}
+
+- (void)showHDSheetPreservingBorder:(BOOL)border {
+    if (self.hdSheet == nil) {
+        self.hdSheet = [[HDConversionWindowController alloc] initWithWindowNibName:@"HDConversionWindowController"];
+    }
+    [NSApp beginSheet:[self.hdSheet window] modalForWindow:self.window modalDelegate:self didEndSelector:@selector(didEndHDSheet:returnCode:contextInfo:) contextInfo:(__bridge void *)([NSNumber numberWithBool:border])];
+}
+
+- (void)didEndHDSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+    [sheet orderOut:self];
+    BOOL preserveBorder = [(__bridge NSNumber *)contextInfo boolValue];
+    BOOL makeHD = self.hdSheet.convert;
+    NSAlert *alert = [[NSAlert alloc] init];
+    if ([self.paintingsController saveSourceWithPainting:self.painting preserveFrame:preserveBorder makeHD:makeHD]) {
+        [alert setMessageText:@"Success!"];
+    } else {
+        [alert setMessageText:@"Failed to save image"];
+    }
+    if ([self loadTexturePackFolder]) {
+        [self.tableView reloadData];
+    }
+    [alert runModal];
 }
 
 #pragma mark PaintingsControllerDelegate
@@ -118,10 +145,6 @@ static NSString *newTexturePackCellID = @"newTexturePack";
     [self.paintingsWindow setPaintingsController:pc];
     [self.paintingsWindow showWindow:self];
     [self.window close];
-}
-
-- (NSString *)paintingsControllerNameChallenge:(PaintingsController *)pc {
-    return nil;
 }
 
 #pragma mark PaintingsWindowControllerDelegate Methods
@@ -151,19 +174,23 @@ static NSString *newTexturePackCellID = @"newTexturePack";
 
 - (void)cropWindowController:(CropWindowController *)cwc didCropImage:(NSImage *)image preserveBorder:(BOOL)preserve {
     self.painting.image = image;
-    NSAlert *alert = [[NSAlert alloc] init];
-    if ([self.paintingsController saveSourceWithPainting:self.painting preserveFrame:preserve]) {
-        [alert setMessageText:@"Success!"];
-    } else {
-        [alert setMessageText:@"Failed to save image"];
-    }
+    [cwc close];
     [self.tableView deselectAll:self];
     [self.window makeKeyAndOrderFront:self];
-    if ([self loadTexturePackFolder]) {
-        [self.tableView reloadData];
+    if (![self.paintingsController isHDSourceImage]) {
+        [self showHDSheetPreservingBorder:preserve];
+    } else {
+        NSAlert *alert = [[NSAlert alloc] init];
+        if ([self.paintingsController saveSourceWithPainting:self.painting preserveFrame:preserve makeHD:YES]) {
+            [alert setMessageText:@"Success!"];
+        } else {
+            [alert setMessageText:@"Failed to save image"];
+        }
+        if ([self loadTexturePackFolder]) {
+            [self.tableView reloadData];
+        }
+        [alert runModal];
     }
-    [cwc close];
-    [alert runModal];
 }
 
 - (void)cropWindowControllerWillClose:(CropWindowController *)cwc {

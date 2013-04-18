@@ -19,7 +19,8 @@
 
 - (id)initWithSourcePath:(NSString *)path delegate:(id <PaintingsControllerDelegate>)delegate;
 - (void)setTexturePackName:(NSString *)name;
-- (BOOL)saveSourceWithPainting:(Painting *)painting preserveFrame:(BOOL)preserve;
+- (BOOL)saveSourceWithPainting:(Painting *)painting preserveFrame:(BOOL)preserve makeHD:(BOOL)hd;
+- (BOOL)isHDSourceImage;
 
 @end
 

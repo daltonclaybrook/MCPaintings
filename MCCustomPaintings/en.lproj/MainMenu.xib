@@ -1303,7 +1303,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{567, 379}, {348, 249}}</string>
 				<int key="NSWTFlags">1954021376</int>
-				<string key="NSWindowTitle">MCCustomPaintings</string>
+				<string key="NSWindowTitle">MCPaintings</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -1519,6 +1519,7 @@
 							<string key="NSFrame">{{164, 101}, {164, 46}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:22</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="421474616">
@@ -3790,20 +3791,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">AppDelegate</string>
 					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="showCrop:">id</string>
-						<string key="start:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="showCrop:">
-							<string key="name">showCrop:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="start:">
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">start:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">start:</string>
+						<object class="IBActionInfo" key="NS.object.0">
 							<string key="name">start:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</dictionary>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="startButton">NSButton</string>
 						<string key="tableView">NSTableView</string>

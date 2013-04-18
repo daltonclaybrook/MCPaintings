@@ -14,6 +14,7 @@
 //Rect is measured by 16px x 16px blocks
 //e.g. {{1, 2}, {4, 4}} equates to {{16, 32}, {64, 64}} 
 @property (nonatomic) NSRect rect;
+@property (nonatomic, readonly) CGFloat hdScaleFactor;
 
 - (id)initWithImage:(NSImage *)image rect:(NSRect)rect;
 - (id)initWithSourceImage:(NSImage *)source coordinates:(NSRect)rect;

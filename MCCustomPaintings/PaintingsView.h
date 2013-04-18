@@ -7,9 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "Painting.h"
 
 @interface PaintingsView : NSView
 
-@property (nonatomic, strong) NSImage *painting;
+@property (nonatomic, strong) Painting *painting;
 
 @end

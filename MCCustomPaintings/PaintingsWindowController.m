@@ -13,6 +13,7 @@
 
 @property (nonatomic) NSInteger currentIndex;
 @property (nonatomic, strong) PaintingsView *currentView;
+@property (nonatomic) CGFloat maxWidth;
 
 @end
 
@@ -47,8 +48,8 @@
     [super showWindow:sender];
     self.currentIndex = 0;
     if (self.paintingsController.sourceImage) {
-        NSImage *painting = [[self.paintingsController.paintings objectAtIndex:self.currentIndex] image];
-        self.sizeLabel.stringValue = [NSString stringWithFormat:@"%i x %i", (int)painting.size.width, (int)painting.size.height];
+        Painting *painting = [self.paintingsController.paintings objectAtIndex:self.currentIndex];
+        self.sizeLabel.stringValue = [NSString stringWithFormat:@"%i x %i", (int)painting.image.size.width, (int)painting.image.size.height];
         self.currentView.painting = painting;
         [self.window.contentView addSubview:self.currentView];
         [self.currentView setNeedsDisplay:YES];
@@ -64,8 +65,8 @@
 - (IBAction)previous:(id)sender {
     self.currentIndex--;
     if (self.currentIndex < 0) self.currentIndex = self.paintingsController.paintings.count-1;
-    NSImage *painting = [[self.paintingsController.paintings objectAtIndex:self.currentIndex] image];
-    self.sizeLabel.stringValue = [NSString stringWithFormat:@"%i x %i", (int)painting.size.width, (int)painting.size.height];
+    Painting *painting = [self.paintingsController.paintings objectAtIndex:self.currentIndex];
+    self.sizeLabel.stringValue = [NSString stringWithFormat:@"%i x %i", (int)painting.image.size.width, (int)painting.image.size.height];
     
     CGFloat duration = 0.4;
     NSView *oldView = self.currentView;
@@ -110,8 +111,8 @@
 - (IBAction)next:(id)sender {
     self.currentIndex++;
     if (self.currentIndex >= self.paintingsController.paintings.count) self.currentIndex = 0;
-    NSImage *painting = [[self.paintingsController.paintings objectAtIndex:self.currentIndex] image];
-    self.sizeLabel.stringValue = [NSString stringWithFormat:@"%i x %i", (int)painting.size.width, (int)painting.size.height];
+    Painting *painting = [self.paintingsController.paintings objectAtIndex:self.currentIndex];
+    self.sizeLabel.stringValue = [NSString stringWithFormat:@"%i x %i", (int)painting.image.size.width, (int)painting.image.size.height];
     
     CGFloat duration = 0.4;
     NSView *oldView = self.currentView;

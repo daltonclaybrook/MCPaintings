@@ -7,8 +7,11 @@
 //
 
 #import "CropWindowController.h"
+#import "HDConversionWindowController.h"
 
 @interface CropWindowController ()
+
+@property (nonatomic, strong) HDConversionWindowController *hdSheetController;
 
 - (void)setAspectRatioFromCropSize:(NSSize)cropSize;
 
@@ -16,7 +19,7 @@
 
 @implementation CropWindowController
 
-@synthesize delegate = _delegate, image = _image, cropView = _cropView, cropSize = _cropSize;
+@synthesize delegate = _delegate, image = _image, cropView = _cropView, cropSize = _cropSize, hdSheetController = _hdSheetController;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -31,16 +34,6 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-//    if (self.image && !self.cropView.image) {
-//        [self.cropView setImage:self.image];
-//        [self.cropView setNeedsDisplay:YES];
-//    } else {
-//        NSOpenPanel *openPanel = [[NSOpenPanel alloc] init];
-//        [openPanel setDelegate:self];
-//        [openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"jpg", @"jpeg", @"png", @"tiff", @"bmp", nil]];
-//        [openPanel setTitle:@"Select a New Image"];
-//        [openPanel runModal];
-//    }
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
@@ -72,8 +65,11 @@
 - (IBAction)cropImage:(id)sender {
     if ([self.delegate respondsToSelector:@selector(cropWindowController:didCropImage:preserveBorder:)]) {
         NSRect cropRect = [self.cropView adjustedCropRect];
+//        CGFloat hdModifier = (self.makeHDBox.state) ? 4.0f : 1.0f;
     
-        NSImage *finalImage = [[NSImage alloc] initWithSize:NSMakeSize(self.cropSize.width*16.0, self.cropSize.height*16.0)];
+//        NSImage *finalImage = [[NSImage alloc] initWithSize:NSMakeSize(self.cropSize.width*16.0*hdModifier, self.cropSize.height*16.0*hdModifier)];
+//        NSLog(@"final image size: %@", NSStringFromSize(finalImage.size));
+        NSImage *finalImage = [[NSImage alloc] initWithSize:cropRect.size];
         [finalImage lockFocus];
         [self.cropView.image drawInRect:NSMakeRect(0, 0, finalImage.size.width, finalImage.size.height) fromRect:cropRect operation:NSCompositeSourceOver fraction:1.0];
         [finalImage unlockFocus];

@@ -12,6 +12,8 @@
 		754F523516DAC19400902FAF /* PaintingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754F523316DAC19400902FAF /* PaintingsWindowController.m */; };
 		754F523616DAC19400902FAF /* PaintingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 754F523416DAC19400902FAF /* PaintingsWindowController.xib */; };
 		754F523916DAC42F00902FAF /* PaintingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 754F523816DAC42F00902FAF /* PaintingsView.m */; };
+		754FE94D16F7B7120026DE3F /* HDConversionWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754FE94B16F7B7120026DE3F /* HDConversionWindowController.m */; };
+		754FE94E16F7B7120026DE3F /* HDConversionWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 754FE94C16F7B7120026DE3F /* HDConversionWindowController.xib */; };
 		7550F9CD16D6EA7200DFC764 /* CropWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7550F9CB16D6EA7200DFC764 /* CropWindowController.m */; };
 		7550F9CE16D6EA7200DFC764 /* CropWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7550F9CC16D6EA7200DFC764 /* CropWindowController.xib */; };
 		7550F9D116D6EB0200DFC764 /* CropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7550F9D016D6EB0200DFC764 /* CropView.m */; };
@@ -39,6 +41,9 @@
 		754F523416DAC19400902FAF /* PaintingsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaintingsWindowController.xib; sourceTree = "<group>"; };
 		754F523716DAC42F00902FAF /* PaintingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintingsView.h; sourceTree = "<group>"; };
 		754F523816DAC42F00902FAF /* PaintingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintingsView.m; sourceTree = "<group>"; };
+		754FE94A16F7B7120026DE3F /* HDConversionWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDConversionWindowController.h; sourceTree = "<group>"; };
+		754FE94B16F7B7120026DE3F /* HDConversionWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDConversionWindowController.m; sourceTree = "<group>"; };
+		754FE94C16F7B7120026DE3F /* HDConversionWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HDConversionWindowController.xib; sourceTree = "<group>"; };
 		7550F9CA16D6EA7200DFC764 /* CropWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropWindowController.h; sourceTree = "<group>"; };
 		7550F9CB16D6EA7200DFC764 /* CropWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropWindowController.m; sourceTree = "<group>"; };
 		7550F9CC16D6EA7200DFC764 /* CropWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CropWindowController.xib; sourceTree = "<group>"; };
@@ -169,6 +174,7 @@
 				754F523416DAC19400902FAF /* PaintingsWindowController.xib */,
 				7550F9CC16D6EA7200DFC764 /* CropWindowController.xib */,
 				757DAC9A16DD055C00D8DFA5 /* NameSheetWindowController.xib */,
+				754FE94C16F7B7120026DE3F /* HDConversionWindowController.xib */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -195,6 +201,8 @@
 				7550F9CB16D6EA7200DFC764 /* CropWindowController.m */,
 				757DAC9816DD055C00D8DFA5 /* NameSheetWindowController.h */,
 				757DAC9916DD055C00D8DFA5 /* NameSheetWindowController.m */,
+				754FE94A16F7B7120026DE3F /* HDConversionWindowController.h */,
+				754FE94B16F7B7120026DE3F /* HDConversionWindowController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -259,6 +267,7 @@
 				754F523616DAC19400902FAF /* PaintingsWindowController.xib in Resources */,
 				7566D22F16DAD82400A0516B /* kz.png in Resources */,
 				757DAC9C16DD055C00D8DFA5 /* NameSheetWindowController.xib in Resources */,
+				754FE94E16F7B7120026DE3F /* HDConversionWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +287,7 @@
 				754F523516DAC19400902FAF /* PaintingsWindowController.m in Sources */,
 				754F523916DAC42F00902FAF /* PaintingsView.m in Sources */,
 				757DAC9B16DD055C00D8DFA5 /* NameSheetWindowController.m in Sources */,
+				754FE94D16F7B7120026DE3F /* HDConversionWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +387,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCCustomPaintings/MCCustomPaintings-Prefix.pch";
 				INFOPLIST_FILE = "MCCustomPaintings/MCCustomPaintings-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -389,6 +400,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCCustomPaintings/MCCustomPaintings-Prefix.pch";
 				INFOPLIST_FILE = "MCCustomPaintings/MCCustomPaintings-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

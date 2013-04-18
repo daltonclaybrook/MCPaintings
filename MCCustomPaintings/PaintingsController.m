@@ -10,6 +10,7 @@
 
 static NSString *mcPath = @"Library/Application Support/minecraft/";
 static NSString *temporaryFolder = @".MCPaintingsTemp/";
+static CGFloat hdWidth = 2048.0f;
 
 @interface PaintingsController ()
 
@@ -62,10 +63,22 @@ static NSString *temporaryFolder = @".MCPaintingsTemp/";
     NSLog(@"name: %@", self.texturePackFolderPath);
 }
 
-- (BOOL)saveSourceWithPainting:(Painting *)painting preserveFrame:(BOOL)preserve {
-    CGFloat padding = (preserve) ? 1.0 : 0.0;
+- (BOOL)saveSourceWithPainting:(Painting *)painting preserveFrame:(BOOL)preserve makeHD:(BOOL)hd {
+    CGFloat hdModifier = (hd) ? (hdWidth / 256.0f) : 1.0f;
+    CGFloat padding = (preserve) ? hdModifier : 0.0;
+    if (hd && (![self isHDSourceImage])) {
+        NSImage *newSource = [[NSImage alloc] initWithSize:NSMakeSize(hdWidth, hdWidth)];
+        [newSource lockFocus];
+        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+        [[NSGraphicsContext currentContext] setShouldAntialias:NO];
+        [self.sourceImage drawInRect:NSMakeRect(0, 0, hdWidth, hdWidth) fromRect:NSMakeRect(0, 0, self.sourceImage.size.width, self.sourceImage.size.height) operation:NSCompositeSourceOver fraction:1.0f];
+        [newSource unlockFocus];
+        self.sourceImage = newSource;
+    }
     [self.sourceImage lockFocus];
-    [painting.image drawInRect:NSMakeRect(painting.rect.origin.x*16.0+padding, painting.rect.origin.y*16.0+padding, painting.rect.size.width*16.0-padding*2.0, painting.rect.size.height*16.0-padding*2.0) fromRect:NSMakeRect(0, 0, painting.image.size.width, painting.image.size.height) operation:NSCompositeSourceOver fraction:1.0];
+    //[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+    //[[NSGraphicsContext currentContext] setShouldAntialias:NO];
+    [painting.image drawInRect:NSMakeRect(painting.rect.origin.x*16.0*hdModifier+padding, painting.rect.origin.y*16.0*hdModifier+padding, painting.rect.size.width*16.0*hdModifier-padding*2.0, painting.rect.size.height*16.0*hdModifier-padding*2.0) fromRect:NSMakeRect(0, 0, painting.image.size.width, painting.image.size.height) operation:NSCompositeSourceOver fraction:1.0];
     [self.sourceImage unlockFocus];
     
     NSData *imageData = [self.sourceImage TIFFRepresentation];
@@ -84,6 +97,13 @@ static NSString *temporaryFolder = @".MCPaintingsTemp/";
         return [imageData writeToFile:[artFolder stringByAppendingPathComponent:@"kz.png"] atomically:NO];
     }
     return NO;
+}
+
+- (BOOL)isHDSourceImage {
+    if (self.sourceImage.size.width < hdWidth) {
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark Private Methods
@@ -147,6 +167,7 @@ static NSString *temporaryFolder = @".MCPaintingsTemp/";
 
 - (NSArray *)loadPaintingsFromSource:(NSImage *)source {
     NSMutableArray *paintings = [NSMutableArray array];
+    CGFloat sizeModifier = source.size.width / 256.0f;
     NSUInteger numSections = 7;
     NSUInteger sectionCounts[] = {
         //Number of images in each section
@@ -178,7 +199,8 @@ static NSString *temporaryFolder = @".MCPaintingsTemp/";
     
     for (int i=0; i<numSections; i++) {
         for (int j=0; j<sectionCounts[i]; j++) {
-            Painting *painting = [[Painting alloc] initWithSourceImage:source coordinates:NSMakeRect((int)sectionBoxes[i].origin.x + (int)(j*imageSizes[i].width)%(int)(sectionBoxes[i].size.width), (source.size.height/16-imageSizes[i].height) - ((int)sectionBoxes[i].origin.y + floorf((j*imageSizes[i].width)/sectionBoxes[i].size.width) * imageSizes[i].height), imageSizes[i].width, imageSizes[i].height)];
+            NSRect lowDefRect = NSMakeRect((int)sectionBoxes[i].origin.x + (int)(j*imageSizes[i].width)%(int)(sectionBoxes[i].size.width), ((source.size.height/sizeModifier)/16-imageSizes[i].height) - ((int)sectionBoxes[i].origin.y + floorf((j*imageSizes[i].width)/sectionBoxes[i].size.width) * imageSizes[i].height), imageSizes[i].width, imageSizes[i].height);
+            Painting *painting = [[Painting alloc] initWithSourceImage:source coordinates:lowDefRect];
             [paintings addObject:painting];
         }
     }
